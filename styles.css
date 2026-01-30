@@ -140,7 +140,7 @@ img {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 100;
+    z-index: 10000;
     background: var(--bg-primary);
     border-bottom: 1px solid var(--border-color);
     backdrop-filter: blur(10px);
@@ -234,6 +234,9 @@ img {
     font-size: 0.8rem;
     font-weight: 500;
     transition: all var(--transition-fast);
+    position: relative;
+    z-index: 10001;
+    pointer-events: auto;
 }
 
 .fight-mode-btn:hover {
