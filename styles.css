@@ -220,6 +220,93 @@ img {
     display: block;
 }
 
+/* Fight Mode Button */
+.fight-mode-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-xs) var(--space-md);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    font-weight: 500;
+    transition: all var(--transition-fast);
+}
+
+.fight-mode-btn:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-color-hover);
+    color: var(--text-primary);
+}
+
+.fight-mode-btn.active {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: #ef4444;
+    color: #ef4444;
+    animation: fightPulse 1s ease-in-out infinite;
+}
+
+@keyframes fightPulse {
+    0%, 100% { box-shadow: 0 0 5px rgba(239, 68, 68, 0.3); }
+    50% { box-shadow: 0 0 15px rgba(239, 68, 68, 0.6); }
+}
+
+.fight-mode-text {
+    display: none;
+}
+
+@media (min-width: 500px) {
+    .fight-mode-text {
+        display: inline;
+    }
+}
+
+/* Fight Mode Active State */
+body.fight-mode {
+    user-select: none;
+}
+
+body.fight-mode .sliceable {
+    cursor: crosshair;
+}
+
+/* Sliced Pieces */
+.sliced-piece {
+    position: fixed;
+    pointer-events: none;
+    z-index: 10000;
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh) rotate(var(--rotation));
+        opacity: 0;
+    }
+}
+
+/* Slash Effect */
+.slash-effect {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, var(--slash-color), transparent);
+    box-shadow: 0 0 20px var(--slash-color), 0 0 40px var(--slash-color);
+    transform-origin: center;
+    animation: slashFade 0.3s ease-out forwards;
+}
+
+@keyframes slashFade {
+    0% { opacity: 1; transform: scaleX(0); }
+    50% { opacity: 1; transform: scaleX(1); }
+    100% { opacity: 0; transform: scaleX(1); }
+}
+
 /* Saber Color Picker */
 .saber-picker {
     position: relative;

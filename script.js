@@ -277,3 +277,166 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         card.style.transition = 'none';
     });
 }
+
+// ==========================================
+// FIGHT MODE - Lightsaber Destruction Mode
+// ==========================================
+
+const fightModeBtn = document.getElementById('fightModeBtn');
+let fightModeActive = false;
+let isSlicing = false;
+let sliceStart = null;
+
+// Get current saber color for slash effects
+function getSlashColor() {
+    const colors = {
+        green: '#22c55e',
+        blue: '#3b82f6',
+        red: '#ef4444',
+        purple: '#a855f7',
+        gold: '#e8c547'
+    };
+    const currentSaber = localStorage.getItem('saberColor') || 'green';
+    return colors[currentSaber];
+}
+
+// Toggle Fight Mode
+fightModeBtn.addEventListener('click', () => {
+    fightModeActive = !fightModeActive;
+    fightModeBtn.classList.toggle('active', fightModeActive);
+    document.body.classList.toggle('fight-mode', fightModeActive);
+
+    if (fightModeActive) {
+        markSliceableElements();
+    } else {
+        resetPage();
+    }
+});
+
+// Mark elements that can be sliced
+function markSliceableElements() {
+    const selectors = 'h1, h2, h3, p, li, .about-photo, .experience-card, .recognition-card, .favorites-card, .section-title';
+    document.querySelectorAll(selectors).forEach(el => {
+        if (!el.closest('.navbar') && !el.closest('.fight-mode-btn')) {
+            el.classList.add('sliceable');
+        }
+    });
+}
+
+// Create slash visual effect
+function createSlashEffect(x, y, angle) {
+    const slash = document.createElement('div');
+    slash.className = 'slash-effect';
+    slash.style.left = x - 50 + 'px';
+    slash.style.top = y + 'px';
+    slash.style.setProperty('--slash-color', getSlashColor());
+    slash.style.transform = `rotate(${angle}deg)`;
+    document.body.appendChild(slash);
+
+    setTimeout(() => slash.remove(), 300);
+}
+
+// Slice an element into pieces
+function sliceElement(element, sliceX, sliceY) {
+    if (!element.classList.contains('sliceable') || element.dataset.sliced) return;
+
+    element.dataset.sliced = 'true';
+    const rect = element.getBoundingClientRect();
+    const styles = window.getComputedStyle(element);
+
+    // Create two pieces
+    const piece1 = document.createElement('div');
+    const piece2 = document.createElement('div');
+
+    piece1.className = 'sliced-piece';
+    piece2.className = 'sliced-piece';
+
+    // Clone the element's appearance
+    const clone1 = element.cloneNode(true);
+    const clone2 = element.cloneNode(true);
+
+    // Style piece 1 (top/left portion)
+    piece1.style.left = rect.left + 'px';
+    piece1.style.top = rect.top + 'px';
+    piece1.style.width = rect.width + 'px';
+    piece1.style.height = rect.height / 2 + 'px';
+    piece1.style.overflow = 'hidden';
+    piece1.style.background = styles.background;
+    piece1.style.setProperty('--rotation', (Math.random() * 60 - 30) + 'deg');
+    piece1.style.animationDuration = (1.5 + Math.random()) + 's';
+    clone1.style.position = 'relative';
+    piece1.appendChild(clone1);
+
+    // Style piece 2 (bottom/right portion)
+    piece2.style.left = rect.left + 'px';
+    piece2.style.top = (rect.top + rect.height / 2) + 'px';
+    piece2.style.width = rect.width + 'px';
+    piece2.style.height = rect.height / 2 + 'px';
+    piece2.style.overflow = 'hidden';
+    piece2.style.background = styles.background;
+    piece2.style.setProperty('--rotation', (Math.random() * 60 - 30) + 'deg');
+    piece2.style.animationDuration = (1.5 + Math.random()) + 's';
+    clone2.style.position = 'relative';
+    clone2.style.top = -(rect.height / 2) + 'px';
+    piece2.appendChild(clone2);
+
+    document.body.appendChild(piece1);
+    document.body.appendChild(piece2);
+
+    // Hide original element
+    element.style.visibility = 'hidden';
+
+    // Remove pieces after animation
+    setTimeout(() => {
+        piece1.remove();
+        piece2.remove();
+    }, 3000);
+}
+
+// Handle slicing interaction
+document.addEventListener('mousedown', (e) => {
+    if (!fightModeActive) return;
+    isSlicing = true;
+    sliceStart = { x: e.clientX, y: e.clientY };
+});
+
+document.addEventListener('mousemove', (e) => {
+    if (!fightModeActive || !isSlicing) return;
+
+    const element = document.elementFromPoint(e.clientX, e.clientY);
+    if (element && element.classList.contains('sliceable')) {
+        const angle = Math.atan2(e.clientY - sliceStart.y, e.clientX - sliceStart.x) * 180 / Math.PI;
+        createSlashEffect(e.clientX, e.clientY, angle);
+        sliceElement(element, e.clientX, e.clientY);
+    }
+
+    sliceStart = { x: e.clientX, y: e.clientY };
+});
+
+document.addEventListener('mouseup', () => {
+    isSlicing = false;
+    sliceStart = null;
+});
+
+// Reset page to original state
+function resetPage() {
+    // Remove sliceable class
+    document.querySelectorAll('.sliceable').forEach(el => {
+        el.classList.remove('sliceable');
+        el.style.visibility = '';
+        delete el.dataset.sliced;
+    });
+
+    // Remove any remaining pieces
+    document.querySelectorAll('.sliced-piece').forEach(el => el.remove());
+}
+
+// Press Escape to exit fight mode
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && fightModeActive) {
+        fightModeActive = false;
+        fightModeBtn.classList.remove('active');
+        document.body.classList.remove('fight-mode');
+        resetPage();
+    }
+});
