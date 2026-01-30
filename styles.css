@@ -942,7 +942,7 @@ body.fight-mode .sliceable {
     max-width: 2000px;
     height: auto;
     color: var(--accent-primary);
-    opacity: 0.15;
+    opacity: 0.25;
     animation: rowingFloat 8s ease-in-out infinite;
 }
 
