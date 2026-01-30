@@ -933,16 +933,15 @@ body.fight-mode .sliceable {
     z-index: 0;
 }
 
-.rowing-boat-bg svg {
+.rowing-boat-bg img {
     position: absolute;
-    bottom: 5%;
-    left: 60%;
+    bottom: 15%;
+    left: 90%;
     transform: translateX(-50%);
-    width: 180%;
-    max-width: 2000px;
+    width: 800px;
     height: auto;
-    color: var(--accent-primary);
-    opacity: 0.25;
+    opacity: 0.3;
+    filter: sepia(1) saturate(3) hue-rotate(15deg) brightness(0.9);
     animation: rowingFloat 8s ease-in-out infinite;
 }
 
