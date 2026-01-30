@@ -909,6 +909,57 @@ body.fight-mode .sliceable {
 .experience {
     padding: var(--space-3xl) var(--space-lg);
     background: var(--bg-secondary);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Parallax Section */
+.parallax-section {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* Rowing Boat Background */
+.rowing-boat-bg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.rowing-boat-bg svg {
+    position: absolute;
+    bottom: 5%;
+    left: 60%;
+    transform: translateX(-50%);
+    width: 180%;
+    max-width: 2000px;
+    height: auto;
+    color: var(--accent-primary);
+    opacity: 0.15;
+    animation: rowingFloat 8s ease-in-out infinite;
+}
+
+@keyframes rowingFloat {
+    0%, 100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    50% {
+        transform: translateX(-50%) translateY(-10px);
+    }
+}
+
+/* Ensure content is above the boat */
+.experience .section-title,
+.experience-grid {
+    position: relative;
+    z-index: 1;
 }
 
 .experience-grid {
