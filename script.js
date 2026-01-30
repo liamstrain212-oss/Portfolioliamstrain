@@ -361,37 +361,20 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         element.dataset.sliced = 'true';
         const rect = element.getBoundingClientRect();
 
-        // Convert angle to radians and normalize
-        const angleRad = (angle || 0) * Math.PI / 180;
+        // Normalize angle for clip-path (perpendicular to swipe)
+        const cutAngle = (angle + 90) * Math.PI / 180;
+        const dx = Math.cos(cutAngle) * 100;
+        const dy = Math.sin(cutAngle) * 100;
 
-        // Calculate clip path points based on swipe angle
-        // We create two triangular/polygon clips that follow the cut line
-        const centerX = 50;
-        const centerY = 50;
-
-        // Perpendicular offset for the cut line
-        const cutAngle = angle + 90; // Perpendicular to swipe direction
-        const offsetX = Math.cos(cutAngle * Math.PI / 180) * 70;
-        const offsetY = Math.sin(cutAngle * Math.PI / 180) * 70;
-
-        // Create two pieces with angled clip paths
-        const clips = [
-            `polygon(${centerX - offsetX}% ${centerY - offsetY}%, 100% 0%, 100% 100%, 0% 100%, 0% 0%)`,
-            `polygon(${centerX + offsetX}% ${centerY + offsetY}%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, ${centerX - offsetX}% ${centerY - offsetY}%)`
-        ];
+        // Two clip paths - one for each half
+        const clip1 = `polygon(${50 + dx}% ${50 + dy}%, ${50 - dx}% ${50 - dy}%, -50% -50%, -50% 150%, 150% 150%, 150% -50%)`;
+        const clip2 = `polygon(${50 + dx}% ${50 + dy}%, ${50 - dx}% ${50 - dy}%, 150% 150%, 150% -50%, -50% -50%, -50% 150%)`;
 
         for (let i = 0; i < 2; i++) {
             const piece = document.createElement('div');
-            piece.className = 'sliced-piece';
-
             const clone = element.cloneNode(true);
-            clone.style.margin = '0';
-            clone.style.position = 'relative';
-            clone.style.width = '100%';
-            clone.style.height = '100%';
 
-            // Determine which side of the cut this piece is on
-            const isFirstHalf = i === 0;
+            clone.style.cssText = 'margin:0; width:100%; height:100%;';
 
             piece.style.cssText = `
                 position: fixed;
@@ -399,44 +382,49 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
                 top: ${rect.top}px;
                 width: ${rect.width}px;
                 height: ${rect.height}px;
-                overflow: visible;
                 pointer-events: none;
                 z-index: 10000;
-                clip-path: ${isFirstHalf ?
-                    `polygon(0% 0%, ${50 + offsetX}% ${50 + offsetY}%, ${50 - offsetX}% ${50 - offsetY}%, 0% 100%)` :
-                    `polygon(100% 0%, 100% 100%, ${50 - offsetX}% ${50 - offsetY}%, ${50 + offsetX}% ${50 + offsetY}%)`
-                };
+                clip-path: ${i === 0 ? clip1 : clip2};
+                overflow: hidden;
             `;
 
             piece.appendChild(clone);
             document.body.appendChild(piece);
 
-            // Animate falling - direction based on which half and cut angle
-            const fallAngle = isFirstHalf ? angle - 90 : angle + 90;
-            const fallX = Math.cos(fallAngle * Math.PI / 180) * (100 + Math.random() * 100);
-            const fallY = window.innerHeight + Math.random() * 200;
-            const rotation = (isFirstHalf ? -1 : 1) * (30 + Math.random() * 60);
+            // Each piece falls in opposite directions based on cut angle
+            const dir = i === 0 ? 1 : -1;
+            const fallX = dir * Math.cos(cutAngle) * 150;
+            const fallY = window.innerHeight;
+            const spin = dir * (45 + Math.random() * 45);
 
             piece.animate([
-                { transform: 'translate(0, 0) rotate(0deg)', opacity: 1 },
-                { transform: `translate(${fallX}px, ${fallY}px) rotate(${rotation}deg)`, opacity: 0 }
+                { transform: 'translate(0,0) rotate(0deg)', opacity: 1 },
+                { transform: `translate(${fallX}px, ${fallY}px) rotate(${spin}deg)`, opacity: 0 }
             ], {
-                duration: 1200 + Math.random() * 800,
+                duration: 1000 + Math.random() * 500,
                 easing: 'ease-in'
-            }).onfinish = function() { piece.remove(); };
+            }).onfinish = () => piece.remove();
         }
 
-        // Hide original
         element.style.visibility = 'hidden';
     }
 
-    // Mouse events for slicing - just move to slice when in fight mode
+    // Slicing happens on mouse move - no click needed
     document.addEventListener('mousemove', function(e) {
         if (!fightModeActive) return;
 
+        // Calculate angle from last position
+        let angle = 0;
+        if (lastPos) {
+            const dx = e.clientX - lastPos.x;
+            const dy = e.clientY - lastPos.y;
+            if (Math.abs(dx) > 2 || Math.abs(dy) > 2) {
+                angle = Math.atan2(dy, dx) * 180 / Math.PI;
+            }
+        }
+
         const element = document.elementFromPoint(e.clientX, e.clientY);
         if (element && element.classList.contains('sliceable') && element.dataset.sliced !== 'true') {
-            const angle = lastPos ? Math.atan2(e.clientY - lastPos.y, e.clientX - lastPos.x) * 180 / Math.PI : 0;
             createSlashEffect(e.clientX, e.clientY, angle);
             sliceElement(element, angle);
         }
