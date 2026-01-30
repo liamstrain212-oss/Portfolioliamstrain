@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liam Strain | Student Athlete</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">LS</a>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#experience">Experience</a>
+                <a href="#recognition">Recognition</a>
+                <a href="#contact">Contact</a>
+                <div class="saber-picker">
+                    <button class="saber-picker-btn" id="saberPickerBtn" aria-label="Change lightsaber color">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
+                            <g transform="rotate(-30 16 16)">
+                                <rect x="14" y="20" width="4" height="10" rx="1" fill="currentColor"/>
+                                <rect x="14.5" y="2" width="3" height="18" rx="1.5" fill="currentColor"/>
+                            </g>
+                        </svg>
+                    </button>
+                    <div class="saber-dropdown" id="saberDropdown">
+                        <button class="saber-color green active" data-color="green" aria-label="Green saber"></button>
+                        <button class="saber-color blue" data-color="blue" aria-label="Blue saber"></button>
+                        <button class="saber-color red" data-color="red" aria-label="Red saber"></button>
+                        <button class="saber-color purple" data-color="purple" aria-label="Purple saber"></button>
+                        <button class="saber-color gold" data-color="gold" aria-label="Gold saber"></button>
+                    </div>
+                </div>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <p class="greeting">Hi, I'm</p>
+            <h1 class="name">Liam Strain</h1>
+            <h2 class="title">Student Athlete</h2>
+            <p class="tagline">Balancing athletics and academics at Drexel University, driven to connect, compete, and create impact through communication.</p>
+            <div class="hero-cta">
+                <a href="#experience" class="btn btn-primary">View My Experience</a>
+                <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+            </div>
+            <div class="social-links">
+                <a href="https://www.instagram.com/liam.strain_/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                </a>
+                <a href="https://www.linkedin.com/in/liam-strain-b714ba29a" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                </a>
+                <a href="mailto:liamstrain212@gmail.com" aria-label="Personal Email">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                </a>
+                <a href="mailto:lps44@drexel.edu" aria-label="School Email">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                        <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="blob"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="me face picture .png" alt="Liam Strain" class="about-photo">
+                </div>
+                <div class="about-text">
+                    <p>Hello! I'm <strong>Liam Strain</strong>, a Division 1 rower and Communications major at Drexel University. I dedicate over 30 hours a week to training, balancing early mornings on the water with rigorous academics. Six years of competitive team sports have shaped my work ethic and ability to collaborate under pressure.</p>
+                    <p>I'm passionate about making a positive impact through outstanding communication, technical skills, and a drive for innovation. Whether it's leading team service projects, delivering multimedia marketing campaigns, or managing large-scale events, I thrive on challenges that let me connect with diverse groups.</p>
+                    <p>Here are some of my core strengths:</p>
+                    <ul class="skills-list">
+                        <li>Communication</li>
+                        <li>Leadership</li>
+                        <li>Project Management</li>
+                        <li>Microsoft Office Suite</li>
+                        <li>Google Workspace</li>
+                        <li>AI & Genertic AI Tools</li>
+                    </ul>
+                    <div class="education-brief">
+                        <h4>Education</h4>
+                        <p><strong>Drexel University</strong> — B.A. in Communications (Expected 2028)</p>
+                        <p><strong>LaSalle College High School</strong> — Class of 2023</p>
+                        <p class="courses">Relevant Coursework: Public Relations Principles, Composition & Rhetoric, Business Foundations, Sports Business, Qualitative Research Methods, Reputation Management in PR</p>
+                    </div>
+                    <div class="memberships">
+                        <h4>Memberships</h4>
+                        <ul class="membership-list">
+                            <li>Drexel University Artificial Intelligence Club</li>
+                            <li>Sons of the American Revolution</li>
+                            <li>Crescent Boat Club</li>
+                            <li>Vesper Boat Club</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="experience">
+        <div class="container">
+            <h2 class="section-title">Experience</h2>
+            <div class="experience-grid">
+                <article class="experience-card">
+                    <div class="experience-header">
+                        <h3>Division 1 Student Athlete, Rowing</h3>
+                        <span class="experience-date">2023 — Present</span>
+                    </div>
+                    <p class="experience-org">Drexel University</p>
+                    <ul class="experience-details">
+                        <li>Recruited athlete balancing academics with intense 30-hour weekly practice schedule</li>
+                        <li>Brand ambassador delivering multimedia marketing and fundraising messaging for the team</li>
+                        <li>Led team service projects in collaboration with local community organizations</li>
+                    </ul>
+                </article>
+
+                <article class="experience-card featured">
+                    <div class="experience-header">
+                        <h3>Intern</h3>
+                        <span class="experience-date">March — September 2025</span>
+                    </div>
+                    <p class="experience-org">US Squash — U.S. Olympic Committee Partner</p>
+                    <ul class="experience-details">
+                        <li>Managed all aspects of the training facility; engaged with donors and supporters</li>
+                        <li>Supported logistics, marketing, and engagement for Olympic trial competitions and donor events</li>
+                        <li>Initiated and designed a digital-first membership and scheduling system to improve member experience</li>
+                        <li>Designed and deployed new logos and social media content</li>
+                        <li>Led work safety meetings; invited to continue beyond the internship</li>
+                    </ul>
+                </article>
+
+                <article class="experience-card">
+                    <div class="experience-header">
+                        <h3>Events and Facilities Team</h3>
+                        <span class="experience-date">Summer 2022 — 2024</span>
+                    </div>
+                    <p class="experience-org">Villanova University</p>
+                    <ul class="experience-details">
+                        <li>Managed special events setup and execution as full-time summer employee</li>
+                        <li>Led communication across fundraising, academic, and athletic departments for large-scale events</li>
+                        <li>Coordinated with university leadership, donors, corporate partners, and visiting academics</li>
+                    </ul>
+                </article>
+
+                <article class="experience-card">
+                    <div class="experience-header">
+                        <h3>Lifeguard</h3>
+                        <span class="experience-date">Summer 2021</span>
+                    </div>
+                    <p class="experience-org">Fox Pool Management</p>
+                    <ul class="experience-details">
+                        <li>Lifeguard for multiple aquatic complexes across the Philadelphia area</li>
+                        <li>Individually responsible for all safety and security of pool complexes</li>
+                        <li>Primary contact for facilities team on security, membership, and safety compliance</li>
+                    </ul>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recognition Section -->
+    <section id="recognition" class="recognition">
+        <div class="container">
+            <h2 class="section-title">Recognition & Awards</h2>
+            <div class="recognition-grid">
+                <div class="recognition-card">
+                    <div class="recognition-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="8" r="6"></circle>
+                            <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path>
+                        </svg>
+                    </div>
+                    <h3>Athletic Scholarship</h3>
+                    <p>Drexel University, 2023 — Present</p>
+                </div>
+
+                <div class="recognition-card">
+                    <div class="recognition-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                        </svg>
+                    </div>
+                    <h3>Academic Scholarship</h3>
+                    <p>Drexel University, 2023 — Present</p>
+                </div>
+
+                <div class="recognition-card">
+                    <div class="recognition-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                            <path d="M4 22h16"></path>
+                            <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+                            <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+                            <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+                        </svg>
+                    </div>
+                    <h3>Leadership & Citizenship Award</h3>
+                    <p>Union League of Philadelphia, 2022</p>
+                </div>
+
+                <div class="recognition-card">
+                    <div class="recognition-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
+                        </svg>
+                    </div>
+                    <h3>Knight Essay Contest Winner</h3>
+                    <p>George S. & Stella M. Knight Essay Contest, 2023</p>
+                </div>
+
+                </div>
+        </div>
+    </section>
+
+    <!-- Spotify Section -->
+    <section class="spotify-section">
+        <div class="container">
+            <h2 class="section-title">What I'm Listening To</h2>
+            <div class="spotify-embed">
+                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZEVXdgVOmkaSWy60?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Favorites Section -->
+    <section id="favorites" class="favorites">
+        <div class="container">
+            <h2 class="section-title">My Favorites</h2>
+            <div class="favorites-grid">
+                <div class="favorites-card">
+                    <div class="favorites-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 11l18-5v12L3 14v-3z"></path>
+                            <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path>
+                        </svg>
+                    </div>
+                    <h3>Restaurants</h3>
+                    <ul class="favorites-list">
+                        <li>Peter Luger's</li>
+                        <li>Talula's Garden</li>
+                        <li>Angelo's Pizzeria</li>
+                    </ul>
+                </div>
+
+                <div class="favorites-card">
+                    <div class="favorites-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </div>
+                    <h3>Music</h3>
+                    <ul class="favorites-list">
+                        <li>Oasis</li>
+                        <li>The Backseat Lovers</li>
+                        <li>Modern Baseball</li>
+                        <li>Fontaines D.C.</li>
+                    </ul>
+                </div>
+
+                <div class="favorites-card">
+                    <div class="favorites-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path>
+                            <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path>
+                            <line x1="6" y1="2" x2="6" y2="4"></line>
+                            <line x1="10" y1="2" x2="10" y2="4"></line>
+                            <line x1="14" y1="2" x2="14" y2="4"></line>
+                        </svg>
+                    </div>
+                    <h3>Beer</h3>
+                    <ul class="favorites-list">
+                        <li>Murphy's Irish Stout</li>
+                        <li>Fat Tire</li>
+                        <li>Miller High Life</li>
+                    </ul>
+                </div>
+
+                <div class="favorites-card">
+                    <div class="favorites-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect>
+                            <polyline points="17 2 12 7 7 2"></polyline>
+                        </svg>
+                    </div>
+                    <h3>Movies & TV</h3>
+                    <ul class="favorites-list">
+                        <li>Star Wars</li>
+                        <li>Game of Thrones</li>
+                        <li>Slugterra</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="contact-intro">I'm currently open to new opportunities. Whether you have a question or just want to say hi, I'll do my best to get back to you!</p>
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+            <p class="contact-alternative">Or reach me directly at <a href="mailto:liamstrain212@gmail.com">liamstrain212@gmail.com</a> or <a href="mailto:lps44@drexel.edu">lps44@drexel.edu</a></p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Liam Strain. All rights reserved.</p>
+            <p class="footer-note">Designed & Built with care</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
