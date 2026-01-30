@@ -287,7 +287,6 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     if (!fightModeBtn) return;
 
     let fightModeActive = false;
-    let isSlicing = false;
     let lastPos = null;
 
     // Get current saber color for slash effects
@@ -431,15 +430,9 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         element.style.visibility = 'hidden';
     }
 
-    // Mouse events for slicing
-    document.addEventListener('mousedown', function(e) {
-        if (!fightModeActive) return;
-        isSlicing = true;
-        lastPos = { x: e.clientX, y: e.clientY };
-    });
-
+    // Mouse events for slicing - just move to slice when in fight mode
     document.addEventListener('mousemove', function(e) {
-        if (!fightModeActive || !isSlicing) return;
+        if (!fightModeActive) return;
 
         const element = document.elementFromPoint(e.clientX, e.clientY);
         if (element && element.classList.contains('sliceable') && element.dataset.sliced !== 'true') {
@@ -449,11 +442,6 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         }
 
         lastPos = { x: e.clientX, y: e.clientY };
-    });
-
-    document.addEventListener('mouseup', function() {
-        isSlicing = false;
-        lastPos = null;
     });
 
     // Reset page
