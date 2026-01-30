@@ -278,6 +278,70 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     });
 }
 
+// Video Carousel
+(function() {
+    const videos = document.querySelectorAll('.rowing-video');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    const dotsContainer = document.querySelector('.video-dots');
+
+    if (!videos.length || !prevBtn || !nextBtn) return;
+
+    let currentIndex = 0;
+
+    // Create dots
+    videos.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'video-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', `Video ${i + 1}`);
+        dot.addEventListener('click', () => goToVideo(i));
+        dotsContainer.appendChild(dot);
+    });
+
+    const dots = document.querySelectorAll('.video-dot');
+
+    function goToVideo(index) {
+        // Pause current video
+        videos[currentIndex].pause();
+        videos[currentIndex].classList.remove('active');
+        dots[currentIndex].classList.remove('active');
+
+        // Update index
+        currentIndex = index;
+        if (currentIndex < 0) currentIndex = videos.length - 1;
+        if (currentIndex >= videos.length) currentIndex = 0;
+
+        // Play new video
+        videos[currentIndex].classList.add('active');
+        dots[currentIndex].classList.add('active');
+        videos[currentIndex].currentTime = 0;
+        videos[currentIndex].play();
+    }
+
+    prevBtn.addEventListener('click', () => goToVideo(currentIndex - 1));
+    nextBtn.addEventListener('click', () => goToVideo(currentIndex + 1));
+
+    // Auto-play first video when visible
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                videos[currentIndex].play();
+            } else {
+                videos[currentIndex].pause();
+            }
+        });
+    }, { threshold: 0.5 });
+
+    observer.observe(document.querySelector('.video-container'));
+
+    // Loop videos
+    videos.forEach((video, i) => {
+        video.addEventListener('ended', () => {
+            goToVideo(i + 1);
+        });
+    });
+})();
+
 // ==========================================
 // FIGHT MODE - Lightsaber Destruction Mode
 // ==========================================
