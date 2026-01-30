@@ -282,161 +282,178 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
 // FIGHT MODE - Lightsaber Destruction Mode
 // ==========================================
 
-const fightModeBtn = document.getElementById('fightModeBtn');
-let fightModeActive = false;
-let isSlicing = false;
-let sliceStart = null;
+(function() {
+    const fightModeBtn = document.getElementById('fightModeBtn');
+    if (!fightModeBtn) return;
 
-// Get current saber color for slash effects
-function getSlashColor() {
-    const colors = {
-        green: '#22c55e',
-        blue: '#3b82f6',
-        red: '#ef4444',
-        purple: '#a855f7',
-        gold: '#e8c547'
-    };
-    const currentSaber = localStorage.getItem('saberColor') || 'green';
-    return colors[currentSaber];
-}
+    let fightModeActive = false;
+    let isSlicing = false;
+    let lastPos = null;
 
-// Toggle Fight Mode
-fightModeBtn.addEventListener('click', () => {
-    fightModeActive = !fightModeActive;
-    fightModeBtn.classList.toggle('active', fightModeActive);
-    document.body.classList.toggle('fight-mode', fightModeActive);
-
-    if (fightModeActive) {
-        markSliceableElements();
-    } else {
-        resetPage();
+    // Get current saber color for slash effects
+    function getSlashColor() {
+        const colors = {
+            green: '#22c55e',
+            blue: '#3b82f6',
+            red: '#ef4444',
+            purple: '#a855f7',
+            gold: '#e8c547'
+        };
+        const currentSaber = localStorage.getItem('saberColor') || 'green';
+        return colors[currentSaber];
     }
-});
 
-// Mark elements that can be sliced
-function markSliceableElements() {
-    const selectors = 'h1, h2, h3, p, li, .about-photo, .experience-card, .recognition-card, .favorites-card, .section-title';
-    document.querySelectorAll(selectors).forEach(el => {
-        if (!el.closest('.navbar') && !el.closest('.fight-mode-btn')) {
-            el.classList.add('sliceable');
+    // Toggle Fight Mode
+    fightModeBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        fightModeActive = !fightModeActive;
+
+        if (fightModeActive) {
+            fightModeBtn.classList.add('active');
+            document.body.classList.add('fight-mode');
+            markSliceableElements();
+            console.log('Fight Mode: ON');
+        } else {
+            fightModeBtn.classList.remove('active');
+            document.body.classList.remove('fight-mode');
+            resetPage();
+            console.log('Fight Mode: OFF');
         }
     });
-}
 
-// Create slash visual effect
-function createSlashEffect(x, y, angle) {
-    const slash = document.createElement('div');
-    slash.className = 'slash-effect';
-    slash.style.left = x - 50 + 'px';
-    slash.style.top = y + 'px';
-    slash.style.setProperty('--slash-color', getSlashColor());
-    slash.style.transform = `rotate(${angle}deg)`;
-    document.body.appendChild(slash);
-
-    setTimeout(() => slash.remove(), 300);
-}
-
-// Slice an element into pieces
-function sliceElement(element, sliceX, sliceY) {
-    if (!element.classList.contains('sliceable') || element.dataset.sliced) return;
-
-    element.dataset.sliced = 'true';
-    const rect = element.getBoundingClientRect();
-    const styles = window.getComputedStyle(element);
-
-    // Create two pieces
-    const piece1 = document.createElement('div');
-    const piece2 = document.createElement('div');
-
-    piece1.className = 'sliced-piece';
-    piece2.className = 'sliced-piece';
-
-    // Clone the element's appearance
-    const clone1 = element.cloneNode(true);
-    const clone2 = element.cloneNode(true);
-
-    // Style piece 1 (top/left portion)
-    piece1.style.left = rect.left + 'px';
-    piece1.style.top = rect.top + 'px';
-    piece1.style.width = rect.width + 'px';
-    piece1.style.height = rect.height / 2 + 'px';
-    piece1.style.overflow = 'hidden';
-    piece1.style.background = styles.background;
-    piece1.style.setProperty('--rotation', (Math.random() * 60 - 30) + 'deg');
-    piece1.style.animationDuration = (1.5 + Math.random()) + 's';
-    clone1.style.position = 'relative';
-    piece1.appendChild(clone1);
-
-    // Style piece 2 (bottom/right portion)
-    piece2.style.left = rect.left + 'px';
-    piece2.style.top = (rect.top + rect.height / 2) + 'px';
-    piece2.style.width = rect.width + 'px';
-    piece2.style.height = rect.height / 2 + 'px';
-    piece2.style.overflow = 'hidden';
-    piece2.style.background = styles.background;
-    piece2.style.setProperty('--rotation', (Math.random() * 60 - 30) + 'deg');
-    piece2.style.animationDuration = (1.5 + Math.random()) + 's';
-    clone2.style.position = 'relative';
-    clone2.style.top = -(rect.height / 2) + 'px';
-    piece2.appendChild(clone2);
-
-    document.body.appendChild(piece1);
-    document.body.appendChild(piece2);
-
-    // Hide original element
-    element.style.visibility = 'hidden';
-
-    // Remove pieces after animation
-    setTimeout(() => {
-        piece1.remove();
-        piece2.remove();
-    }, 3000);
-}
-
-// Handle slicing interaction
-document.addEventListener('mousedown', (e) => {
-    if (!fightModeActive) return;
-    isSlicing = true;
-    sliceStart = { x: e.clientX, y: e.clientY };
-});
-
-document.addEventListener('mousemove', (e) => {
-    if (!fightModeActive || !isSlicing) return;
-
-    const element = document.elementFromPoint(e.clientX, e.clientY);
-    if (element && element.classList.contains('sliceable')) {
-        const angle = Math.atan2(e.clientY - sliceStart.y, e.clientX - sliceStart.x) * 180 / Math.PI;
-        createSlashEffect(e.clientX, e.clientY, angle);
-        sliceElement(element, e.clientX, e.clientY);
+    // Mark elements that can be sliced
+    function markSliceableElements() {
+        const selectors = 'h1, h2, h3, h4, p, li, img, .experience-card, .recognition-card, .favorites-card';
+        document.querySelectorAll(selectors).forEach(function(el) {
+            if (!el.closest('.navbar') && !el.closest('.fight-mode-btn') && !el.closest('.saber-picker')) {
+                el.classList.add('sliceable');
+                el.style.cursor = 'crosshair';
+            }
+        });
     }
 
-    sliceStart = { x: e.clientX, y: e.clientY };
-});
+    // Create slash visual effect
+    function createSlashEffect(x, y, angle) {
+        const slash = document.createElement('div');
+        slash.className = 'slash-effect';
+        slash.style.cssText = `
+            position: fixed;
+            left: ${x - 50}px;
+            top: ${y}px;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, ${getSlashColor()}, transparent);
+            box-shadow: 0 0 20px ${getSlashColor()}, 0 0 40px ${getSlashColor()};
+            transform: rotate(${angle}deg);
+            pointer-events: none;
+            z-index: 9999;
+            animation: slashAnim 0.3s ease-out forwards;
+        `;
+        document.body.appendChild(slash);
+        setTimeout(function() { slash.remove(); }, 300);
+    }
 
-document.addEventListener('mouseup', () => {
-    isSlicing = false;
-    sliceStart = null;
-});
+    // Slice an element into pieces
+    function sliceElement(element) {
+        if (!element || !element.classList.contains('sliceable') || element.dataset.sliced === 'true') return;
 
-// Reset page to original state
-function resetPage() {
-    // Remove sliceable class
-    document.querySelectorAll('.sliceable').forEach(el => {
-        el.classList.remove('sliceable');
-        el.style.visibility = '';
-        delete el.dataset.sliced;
+        element.dataset.sliced = 'true';
+        const rect = element.getBoundingClientRect();
+
+        // Create falling pieces
+        for (let i = 0; i < 2; i++) {
+            const piece = document.createElement('div');
+            piece.className = 'sliced-piece';
+
+            const clone = element.cloneNode(true);
+            clone.style.margin = '0';
+            clone.style.position = 'relative';
+
+            const isTop = i === 0;
+            piece.style.cssText = `
+                position: fixed;
+                left: ${rect.left + (isTop ? -10 : 10)}px;
+                top: ${rect.top + (isTop ? 0 : rect.height / 2)}px;
+                width: ${rect.width}px;
+                height: ${rect.height / 2}px;
+                overflow: hidden;
+                pointer-events: none;
+                z-index: 10000;
+                background: var(--bg-card);
+                border-radius: 4px;
+            `;
+
+            if (!isTop) {
+                clone.style.marginTop = -rect.height / 2 + 'px';
+            }
+
+            piece.appendChild(clone);
+            document.body.appendChild(piece);
+
+            // Animate falling
+            const rotation = (Math.random() - 0.5) * 120;
+            const xDrift = (Math.random() - 0.5) * 200;
+
+            piece.animate([
+                { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                { transform: `translateY(${window.innerHeight}px) translateX(${xDrift}px) rotate(${rotation}deg)`, opacity: 0 }
+            ], {
+                duration: 1500 + Math.random() * 1000,
+                easing: 'ease-in'
+            }).onfinish = function() { piece.remove(); };
+        }
+
+        // Hide original
+        element.style.visibility = 'hidden';
+    }
+
+    // Mouse events for slicing
+    document.addEventListener('mousedown', function(e) {
+        if (!fightModeActive) return;
+        isSlicing = true;
+        lastPos = { x: e.clientX, y: e.clientY };
     });
 
-    // Remove any remaining pieces
-    document.querySelectorAll('.sliced-piece').forEach(el => el.remove());
-}
+    document.addEventListener('mousemove', function(e) {
+        if (!fightModeActive || !isSlicing) return;
 
-// Press Escape to exit fight mode
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && fightModeActive) {
-        fightModeActive = false;
-        fightModeBtn.classList.remove('active');
-        document.body.classList.remove('fight-mode');
-        resetPage();
+        const element = document.elementFromPoint(e.clientX, e.clientY);
+        if (element && element.classList.contains('sliceable') && element.dataset.sliced !== 'true') {
+            const angle = lastPos ? Math.atan2(e.clientY - lastPos.y, e.clientX - lastPos.x) * 180 / Math.PI : 0;
+            createSlashEffect(e.clientX, e.clientY, angle);
+            sliceElement(element);
+        }
+
+        lastPos = { x: e.clientX, y: e.clientY };
+    });
+
+    document.addEventListener('mouseup', function() {
+        isSlicing = false;
+        lastPos = null;
+    });
+
+    // Reset page
+    function resetPage() {
+        document.querySelectorAll('.sliceable').forEach(function(el) {
+            el.classList.remove('sliceable');
+            el.style.visibility = '';
+            el.style.cursor = '';
+            el.dataset.sliced = '';
+        });
+        document.querySelectorAll('.sliced-piece, .slash-effect').forEach(function(el) {
+            el.remove();
+        });
     }
-});
+
+    // Escape key to exit
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && fightModeActive) {
+            fightModeActive = false;
+            fightModeBtn.classList.remove('active');
+            document.body.classList.remove('fight-mode');
+            resetPage();
+        }
+    });
+})();

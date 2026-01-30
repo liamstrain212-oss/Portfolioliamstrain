@@ -307,6 +307,12 @@ body.fight-mode .sliceable {
     100% { opacity: 0; transform: scaleX(1); }
 }
 
+@keyframes slashAnim {
+    0% { opacity: 0; transform: scaleX(0) rotate(inherit); }
+    30% { opacity: 1; transform: scaleX(1) rotate(inherit); }
+    100% { opacity: 0; transform: scaleX(1) rotate(inherit); }
+}
+
 /* Saber Color Picker */
 .saber-picker {
     position: relative;
