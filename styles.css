@@ -925,7 +925,7 @@ body.fight-mode .sliceable {
 .rowing-boat-bg {
     position: fixed;
     top: 50%;
-    left: 50%;
+    left: 65%;
     transform: translateY(-50%);
     pointer-events: none;
     z-index: 1;
@@ -943,6 +943,7 @@ body.fight-mode .sliceable {
     width: 2000px;
     height: auto;
     display: block;
+    transform: scaleY(2);
     filter: brightness(0) invert(1) sepia(1) saturate(10) hue-rotate(5deg) brightness(0.85);
 }
 
