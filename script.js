@@ -527,7 +527,7 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         }
 
         // Show boat when Experience section is in view but hide before Recognition
-        if (expRect.top < windowHeight * 0.8 && expRect.bottom > 0 && recTop > windowHeight * 0.9) {
+        if (expRect.top < windowHeight && expRect.bottom > 0 && recTop > windowHeight * 0.9) {
             rowingBoat.classList.add('visible');
         } else {
             rowingBoat.classList.remove('visible');
