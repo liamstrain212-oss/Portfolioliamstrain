@@ -524,15 +524,22 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
 (function() {
     const rowingBoat = document.querySelector('.rowing-boat-bg');
     const experienceSection = document.getElementById('experience');
+    const recognitionSection = document.getElementById('recognition');
 
     if (!rowingBoat || !experienceSection) return;
 
     function checkVisibility() {
-        const rect = experienceSection.getBoundingClientRect();
+        const expRect = experienceSection.getBoundingClientRect();
         const windowHeight = window.innerHeight;
 
-        // Show boat when Experience section is in view
-        if (rect.top < windowHeight * 0.8 && rect.bottom > 0) {
+        // Check if Recognition section is coming into view
+        let recTop = Infinity;
+        if (recognitionSection) {
+            recTop = recognitionSection.getBoundingClientRect().top;
+        }
+
+        // Show boat when Experience section is in view but hide before Recognition
+        if (expRect.top < windowHeight * 0.8 && expRect.bottom > 0 && recTop > windowHeight * 0.5) {
             rowingBoat.classList.add('visible');
         } else {
             rowingBoat.classList.remove('visible');
