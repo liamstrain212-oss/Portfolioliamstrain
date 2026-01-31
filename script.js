@@ -519,3 +519,27 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         }
     });
 })();
+
+// Rowing Boat Parallax - Show only in Experience section
+(function() {
+    const rowingBoat = document.querySelector('.rowing-boat-bg');
+    const experienceSection = document.getElementById('experience');
+
+    if (!rowingBoat || !experienceSection) return;
+
+    function checkVisibility() {
+        const rect = experienceSection.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+
+        // Show boat when Experience section is in view
+        if (rect.top < windowHeight && rect.bottom > 0) {
+            rowingBoat.classList.add('visible');
+        } else {
+            rowingBoat.classList.remove('visible');
+        }
+    }
+
+    window.addEventListener('scroll', checkVisibility);
+    window.addEventListener('resize', checkVisibility);
+    checkVisibility();
+})();
