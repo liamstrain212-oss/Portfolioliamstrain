@@ -923,36 +923,26 @@ body.fight-mode .sliceable {
 
 /* Rowing Boat Background */
 .rowing-boat-bg {
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    position: sticky;
+    top: 50%;
+    transform: translateY(-50%);
     width: 100%;
-    height: 100%;
+    height: 0;
     pointer-events: none;
-    overflow: hidden;
     z-index: 0;
 }
 
 .rowing-boat-bg img {
     position: absolute;
-    bottom: 15%;
-    left: 90%;
-    transform: translateX(-50%);
-    width: 800px;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
     height: auto;
-    opacity: 0.3;
-    filter: sepia(1) saturate(3) hue-rotate(15deg) brightness(0.9);
-    animation: rowingFloat 8s ease-in-out infinite;
+    opacity: 0.25;
+    filter: sepia(1) saturate(3) hue-rotate(15deg) brightness(0.85);
 }
 
-@keyframes rowingFloat {
-    0%, 100% {
-        transform: translateX(-50%) translateY(0);
-    }
-    50% {
-        transform: translateX(-50%) translateY(-10px);
-    }
-}
 
 /* Ensure content is above the boat */
 .experience .section-title,
