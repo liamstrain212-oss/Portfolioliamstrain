@@ -925,22 +925,22 @@ body.fight-mode .sliceable {
 .rowing-boat-bg {
     position: fixed;
     top: 50%;
-    left: 50%;
+    left: 60%;
     transform: translateY(-50%);
     pointer-events: none;
-    z-index: 100;
+    z-index: 1;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.5s ease, visibility 0.5s ease;
 }
 
 .rowing-boat-bg.visible {
-    opacity: 1;
+    opacity: 0.4;
     visibility: visible;
 }
 
 .rowing-boat-bg img {
-    width: 2000px;
+    width: 4000px;
     height: auto;
     display: block;
     filter: brightness(0) invert(1) sepia(1) saturate(10) hue-rotate(5deg) brightness(0.85);
