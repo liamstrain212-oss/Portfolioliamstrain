@@ -1,18 +1,6 @@
-// Theme Toggle Functionality
-const themeToggle = document.getElementById('themeToggle');
+// Set dark theme
 const html = document.documentElement;
-
-// Check for saved theme preference or default to 'dark'
-const savedTheme = localStorage.getItem('theme') || 'dark';
-html.setAttribute('data-theme', savedTheme);
-
-themeToggle.addEventListener('click', () => {
-    const currentTheme = html.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-    html.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-});
+html.setAttribute('data-theme', 'dark');
 
 // Lightsaber Color Picker
 const saberPickerBtn = document.getElementById('saberPickerBtn');
