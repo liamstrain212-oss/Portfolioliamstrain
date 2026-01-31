@@ -932,12 +932,10 @@ body.fight-mode .sliceable {
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.5s ease, visibility 0.5s ease;
-    background-color: var(--bg-secondary);
-    padding: 30px 50px;
 }
 
 .rowing-boat-bg.visible {
-    opacity: 1;
+    opacity: 0.4;
     visibility: visible;
 }
 
@@ -945,17 +943,7 @@ body.fight-mode .sliceable {
     width: 1200px;
     height: auto;
     display: block;
-    mix-blend-mode: multiply;
-    filter: sepia(1) saturate(5) hue-rotate(15deg) brightness(0.7);
-}
-
-/* Light mode adjustment */
-[data-theme="light"] .rowing-boat-bg {
-    background-color: #f8fafc;
-}
-
-[data-theme="light"] .rowing-boat-bg img {
-    filter: sepia(1) saturate(5) hue-rotate(15deg) brightness(0.6);
+    filter: sepia(1) saturate(5) hue-rotate(15deg) brightness(0.9);
 }
 
 
