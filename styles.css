@@ -940,10 +940,9 @@ body.fight-mode .sliceable {
 }
 
 .rowing-boat-bg img {
-    width: 2000px;
+    width: 3500px;
     height: auto;
     display: block;
-    transform: scaleY(8);
     filter: brightness(0) invert(1) sepia(1) saturate(10) hue-rotate(5deg) brightness(0.85);
 }
 

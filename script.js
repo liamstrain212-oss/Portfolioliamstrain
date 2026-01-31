@@ -531,8 +531,9 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         const rect = experienceSection.getBoundingClientRect();
         const windowHeight = window.innerHeight;
 
-        // Show boat when Experience section is in view
-        if (rect.top < windowHeight && rect.bottom > 0) {
+        // Show boat only when Experience section is mostly in view
+        // Top of section is in upper half of screen AND bottom is still visible
+        if (rect.top < windowHeight * 0.5 && rect.bottom > windowHeight * 0.3) {
             rowingBoat.classList.add('visible');
         } else {
             rowingBoat.classList.remove('visible');
