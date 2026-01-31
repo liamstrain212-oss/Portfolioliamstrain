@@ -927,25 +927,25 @@ body.fight-mode .sliceable {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 900px;
+    width: 1000px;
+    height: 200px;
     pointer-events: none;
     z-index: 1;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.5s ease, visibility 0.5s ease;
+    background:
+        url('rowing-silhouette.jpg'),
+        linear-gradient(#d4af37, #d4af37);
+    background-size: contain, contain;
+    background-position: center, center;
+    background-repeat: no-repeat, no-repeat;
+    background-blend-mode: screen;
 }
 
 .rowing-boat-bg.visible {
-    opacity: 1;
+    opacity: 0.5;
     visibility: visible;
-}
-
-.rowing-boat-bg img {
-    width: 100%;
-    height: auto;
-    filter: invert(1) sepia(1) saturate(5) hue-rotate(15deg) brightness(1.2);
-    mix-blend-mode: screen;
-    opacity: 0.35;
 }
 
 
