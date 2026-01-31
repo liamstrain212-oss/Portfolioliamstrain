@@ -943,7 +943,7 @@ body.fight-mode .sliceable {
     width: 4000px;
     height: auto;
     display: block;
-    transform: scaleX(2);
+    transform: scaleX(5);
     filter: brightness(0) invert(1) sepia(1) saturate(10) hue-rotate(5deg) brightness(0.85);
 }
 
